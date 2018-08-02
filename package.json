@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {
     "ajv": "^6.0.0",
-    "aws-sdk": "^2.276.1",
+    "aws-amplify": "^1.0.2",
+    "aws-amplify-react": "^1.0.2",
     "axios": "^0.18.0",
     "chart.js": "^1.1.1",
     "lodash": "^4.17.10",
