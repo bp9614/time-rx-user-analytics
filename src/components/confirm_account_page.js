@@ -5,15 +5,15 @@ import { Link } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 import ErrorMessageModal from './error_message_modal';
 import renderField from './render_field';
-import { forgotPassword } from '../actions/aws';
+import { confirmAccount } from '../actions/aws';
 import './landing_page.css';
 
-class ResetPasswordPage extends Component {
+class ConfirmAccountPage extends Component {
   onSubmit(values) {
-    this.props.forgotPassword(
-      values.username, 
-      () => {this.props.history.push('/password_change')}
-    );
+    this.props.confirmAccount(
+      this.props.username, values.code,
+      () => {this.props.history.push('/create_account_confirmation')
+    });
   }
 
   render() {
@@ -27,15 +27,15 @@ class ResetPasswordPage extends Component {
               <div className="form">
                 <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                   <Field
-                    label="Username" id="username" name="username"
-                    type="text" placeholder="Username"
-                    className="bootstrap-form-control"
-                    component={renderField} />
+                      label="Confirmation Code" id="code" name="code"
+                      type="password" placeholder="Code"
+                      className="bootstrap-form-control"
+                      component={renderField} />
                   <Button
                       className="ui primary button"
                       type="submit"
                       disabled={this.props.isLoading}>
-                    Reset Password
+                    Confirm Account
                   </Button>
                   <Link className="white-link" to="/">
                     <Button type="button" className="ui red button">
@@ -56,8 +56,8 @@ class ResetPasswordPage extends Component {
 function validate(values) {
   const errors = {};
 
-  if (!values.username) {
-    errors.username = 'Enter a Username!';
+  if (!values.code) {
+    errors.code = 'Enter the verification code!';
   }
 
   return errors;
@@ -67,11 +67,12 @@ function mapStateToProps(state) {
   return {
     isLoading: state.loading.isLoading,
     showModal: state.modal.showModal,
+    username: state.aws.username,
   };
 }
 
 export default reduxForm({
   validate: validate,
-  form: 'ResetPasswordForm',
-})(connect(mapStateToProps, { forgotPassword })(ResetPasswordPage));
+  form: 'ConfirmAccountCodeForm',
+})(connect(mapStateToProps, { confirmAccount })(ConfirmAccountPage));
 

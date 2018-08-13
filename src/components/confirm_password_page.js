@@ -5,15 +5,16 @@ import { Link } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 import ErrorMessageModal from './error_message_modal';
 import renderField from './render_field';
-import { forgotPassword } from '../actions/aws';
+import { confirmPassword } from '../actions/aws';
 import './landing_page.css';
 
-class ResetPasswordPage extends Component {
+class ConfirmPasswordPage extends Component {
   onSubmit(values) {
-    this.props.forgotPassword(
-      values.username, 
-      () => {this.props.history.push('/password_change')}
-    );
+    this.props.confirmPassword(
+      this.props.username,
+      values.code, values.password,
+      () => {this.props.history.push('/password_has_reset')
+    });
   }
 
   render() {
@@ -27,10 +28,15 @@ class ResetPasswordPage extends Component {
               <div className="form">
                 <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                   <Field
-                    label="Username" id="username" name="username"
-                    type="text" placeholder="Username"
-                    className="bootstrap-form-control"
-                    component={renderField} />
+                      label="Confirmation Code" id="code" name="code"
+                      type="password" placeholder="Code"
+                      className="bootstrap-form-control"
+                      component={renderField} />
+                  <Field
+                      label="New Password" id="password" name="password"
+                      type="password" placeholder="New Password"
+                      className="bootstrap-form-control"
+                  component={renderField} />
                   <Button
                       className="ui primary button"
                       type="submit"
@@ -56,8 +62,16 @@ class ResetPasswordPage extends Component {
 function validate(values) {
   const errors = {};
 
-  if (!values.username) {
-    errors.username = 'Enter a Username!';
+  if (!values.code) {
+    errors.code = 'Enter the verification code!';
+  }
+
+  if (!values.password) {
+    errors.password = 'Enter a new password!';
+  }
+
+  if (values.password && values.password < 8) {
+    errors.password = 'Password too short!';
   }
 
   return errors;
@@ -67,11 +81,12 @@ function mapStateToProps(state) {
   return {
     isLoading: state.loading.isLoading,
     showModal: state.modal.showModal,
+    username: state.aws.username,
   };
 }
 
 export default reduxForm({
   validate: validate,
-  form: 'ResetPasswordForm',
-})(connect(mapStateToProps, { forgotPassword })(ResetPasswordPage));
+  form: 'ConfirmPasswordForm',
+})(connect(mapStateToProps, { confirmPassword })(ConfirmPasswordPage));
 

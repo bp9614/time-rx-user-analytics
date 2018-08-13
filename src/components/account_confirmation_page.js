@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './landing_page.css';
 
-export default class PasswordHasBeenResetPage extends Component {
+export default class AccountConfirmationPage extends Component {
   render() {
     return (
       <div>
@@ -10,7 +10,7 @@ export default class PasswordHasBeenResetPage extends Component {
           <div className="middle">
             <div className="login-page">
               <div className="form">
-                <h2 className="text-centered">Password Has Been Reset</h2>
+                <h2 className="text-centered">Account Has Been Created</h2>
                 <Link className="white-link" to="/">
                   <button
                       type="submit"

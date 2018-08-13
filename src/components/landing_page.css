@@ -2,7 +2,6 @@
 
 .login-page {
   width: 500px;
-  padding: 12% 0 0;
   margin: auto;
 }
 .form {
@@ -10,7 +9,7 @@
   z-index: 1;
   background: #FFFFFF;
   max-width: 500px;
-  margin: 0 auto 100px;
+  margin: 0 auto;
   padding: 45px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
@@ -24,7 +23,7 @@
   box-sizing: border-box;
   font-size: 14px;
 }
-.form button {
+.login-button {
   text-transform: uppercase;
   outline: 0;
   background: #417df4;
@@ -37,7 +36,7 @@
   transition: all 0.3 ease;
   cursor: pointer;
 }
-.form button:hover,.form button:active,.form button:focus {
+.login-button:hover,.login-button:active, .login-button:focus {
   background: #4286f4;
 }
 .form .message {
@@ -91,9 +90,9 @@
 }
 
 .lower-margin {
-  margin-bottom: 1.5em;
+  margin-bottom: 1.25em !important;
 }
 
-.cursive-font {
-  font-family: 'Berkshire Swash', Helvetica, sans-serif;
+.white-link {
+  color: white;
 }
